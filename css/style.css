@@ -314,6 +314,7 @@ h6 {
   border-radius: 4rem;
   padding: 1rem 2.25rem;
   transition: 0.4s;
+  z-index:9999;
 }
 
 .nav__list {
