@@ -1,39 +1,92 @@
 
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
+$(document).ready(function () {
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
+  const navLinks = $('.nav-link');
+  const sections = $('section[id]');
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
+  /* ==========================
+     Smooth Scroll on Click
+  ========================== */
+  navLinks.on('click', function (e) {
+    const target = this.hash;
+
+    if (target !== "") {
+      e.preventDefault();
+
+      $('html, body').animate({
+        scrollTop: $(target).offset().top - 80
+      }, 800);
+
+      // Active class on click
+      navLinks.removeClass('active');
+      $(this).addClass('active');
     }
-
   });
-}
 
-$(document).ready(function(){
-  $("a").on('click', function(event) {
-    if (this.hash !== "") {
-      event.preventDefault();
-      var hash = this.hash;
-      $('body,html').animate({
-      scrollTop: $(hash).offset().top
-      }, 1000, function(){
-      window.location.hash = hash;
-     });
-     } 
+  /* ==========================
+     Active Link on Scroll
+  ========================== */
+  $(window).on('scroll', function () {
+    let scrollY = $(window).scrollTop();
+
+    sections.each(function () {
+      const sectionTop = $(this).offset().top - 100;
+      const sectionHeight = $(this).outerHeight();
+      const sectionId = $(this).attr('id');
+
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        navLinks.removeClass('active');
+        $('.nav-link[href="#' + sectionId + '"]').addClass('active');
+      }
     });
+  });
+
 });
+
+$(document).ready(function () {
+
+  const navLinks = $('.nav__link');
+  const sections = $('section[id]');
+
+  /* ==========================
+     Smooth Scroll on Click
+  ========================== */
+  navLinks.on('click', function (e) {
+    const target = this.hash;
+
+    if (target !== "") {
+      e.preventDefault();
+
+      $('html, body').animate({
+        scrollTop: $(target).offset().top - 80
+      }, 800);
+
+      // Active class on click
+      navLinks.removeClass('active-link');
+      $(this).addClass('active-link');
+    }
+  });
+
+  /* ==========================
+     Active Link on Scroll
+  ========================== */
+  $(window).on('scroll', function () {
+    let scrollY = $(window).scrollTop();
+
+    sections.each(function () {
+      const sectionTop = $(this).offset().top - 100;
+      const sectionHeight = $(this).outerHeight();
+      const sectionId = $(this).attr('id');
+
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        navLinks.removeClass('active');
+        $('.nav-link[href="#' + sectionId + '"]').addClass('active');
+      }
+    });
+  });
+
+});
+
 particlesJS('particles-js',
 {
   "particles": {
@@ -45,13 +98,13 @@ particlesJS('particles-js',
       }
     },
     "color": {
-      "value": "#ff3232"
+      "value": "#ff494a"
     },
     "shape": {
       "type": "circle",
       "stroke": {
         "width": 0,
-        "color": "#ff3232"
+        "color": "#ff494a"
       },
       "polygon": {
         "nb_sides": 5
